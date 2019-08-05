@@ -1,0 +1,27 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Cria o usuário Rodrigo
+      user:
+        name: rodrigo
+        state: present
+        comment: Rodrigo Lira
+      become: True
+      become_method: su
+    - name: Envia as chaves ssh do usuário Rodrigo
+      authorized_key:
+        user: rodrigo
+        key: "{{ lookup('file', '/home/rodrigo/.ssh/id_rsa.pub') }}"
+        state: present
+      become: True
+      become_method: su
+    - name: Coloca o usuário Rodrigo no /etc/sudoers
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^rodrigo ALL\='
+        line: 'rodrigo ALL=(ALL) NOPASSWD:ALL'
+        validate: 'visudo -cf %s'
+      become: True
+      become_method: su

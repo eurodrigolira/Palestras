@@ -1,0 +1,28 @@
+---
+- name: Instalação do Zabbix Agent ho Host
+  yum:
+    name: zabbix-agent
+    state: present
+  become: True
+- name: Copia o template de configuração do Zabbix Agent
+  template:
+    src: zabbix_agentd.conf
+    dest: /etc/zabbix/zabbix_agentd.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: True
+- name: Libera a porta 10050 no Firewalld
+  firewalld:
+    rich_rule: rule family="ipv4" source address="192.168.200.90" port port="10050" protocol="tcp" accept
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: True
+- name: Inicia e habilita o serviço na inicialização do sistema
+  systemd:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+  become: True 

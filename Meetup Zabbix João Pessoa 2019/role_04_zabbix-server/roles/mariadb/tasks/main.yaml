@@ -1,0 +1,24 @@
+---
+- name: Instalação do MariaDB.
+  yum: 
+    name: ['mariadb-server', 'MySQL-python']
+    state: present
+  become: True
+- name: Inicia e habilita o MariaDB na inicialização do sistema.
+  systemd:
+    name: mariadb
+    enabled: yes
+    state: started
+  become: True
+- name: Cria o banco de dados Zabbix.
+  mysql_db:
+    name: zabbix
+    state: present
+  become: True
+- name: Cria usuario Zabbix no banco e configura as permissoes.
+  mysql_user:
+    name: zabbix
+    password: zabbix
+    priv: '*.*:ALL,GRANT'
+    state: present
+  become: True

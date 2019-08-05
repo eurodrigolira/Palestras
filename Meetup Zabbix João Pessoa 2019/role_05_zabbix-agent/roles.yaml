@@ -1,0 +1,4 @@
+---
+- import_playbook: add_group.yaml
+- import_playbook: add_host.yaml
+- import_playbook: zabbix-agent.yaml

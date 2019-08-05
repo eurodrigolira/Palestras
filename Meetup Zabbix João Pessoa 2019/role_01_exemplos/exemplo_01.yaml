@@ -1,0 +1,6 @@
+---
+- name: PLAY de exemplo
+  hosts: zabbix-server.rodrigolira.lab
+  tasks:
+    - name: TASK de ping de exemplo
+      ping:

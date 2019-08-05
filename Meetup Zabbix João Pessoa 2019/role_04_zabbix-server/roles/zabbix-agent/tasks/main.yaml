@@ -1,0 +1,20 @@
+---
+- name: Instalação do Zabbix Agent
+  yum:
+    name: zabbix-agent
+    state: present
+  become: True
+- name: Copia o template de configuração do Zabbix Agent
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: True
+- name: Inicia e habilita o serviço na inicialização do sistema
+  systemd:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+  become: True 

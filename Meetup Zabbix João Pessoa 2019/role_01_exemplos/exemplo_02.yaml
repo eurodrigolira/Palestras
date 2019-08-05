@@ -1,0 +1,12 @@
+---
+- name: PLAY-01 de exemplo
+  hosts: zabbix-server.rodrigolira.lab
+  tasks:
+    - name: TASK de ping de exemplo
+      ping:
+
+- name: PLAY-02 de exemplo
+  hosts: zabbix-agent.rodrigolira.lab
+  tasks:
+    - name: TASK de ping de exemplo
+      ping:

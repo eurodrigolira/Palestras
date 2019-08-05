@@ -1,0 +1,5 @@
+---
+- hosts: zabbix_agents
+  remote_user: rodrigo
+  roles:
+    - zabbix-agent

@@ -1,0 +1,10 @@
+---
+- name: PLAY-01 de exemplo
+  remote_user: root 
+  hosts: all
+  tasks:
+    - name: TASK de ping de exemplo
+      ping:
+
+    - name: TASK - FQDN dos servidores
+      command: hostname

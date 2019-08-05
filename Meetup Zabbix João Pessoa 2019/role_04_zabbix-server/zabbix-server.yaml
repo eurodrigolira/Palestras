@@ -1,0 +1,6 @@
+---
+- hosts: zabbix_servers
+  remote_user: rodrigo
+  roles:
+    - mariadb
+    - zabbix-server

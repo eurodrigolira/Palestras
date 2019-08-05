@@ -1,0 +1,46 @@
+---
+- name: Instalação do HTTPd e Zabbix Server
+  yum: 
+    name: 
+      ['httpd', 'zabbix-server-mysql', 'zabbix-web-mysql']      
+    state: present
+  become: True
+- name: Libera a porta 80/443 no Firewalld
+  firewalld:
+    port: 80/tcp
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: True
+- name: Copia o arquivo de configuração do Zabbix Server
+  copy:
+    src: zabbix_server.conf
+    dest: /etc/zabbix/zabbix_server.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: True
+- name: Copia o arquivo de configuração do PHP do Zabbix Server
+  copy:
+    src: zabbix.conf
+    dest: /etc/httpd/conf.d/zabbix.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: True
+- name: Importa o schema e dados.
+  shell: zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -pzabbix zabbix
+  become: True
+- name: Inicia e habilita o HTTPd na inicialização do sistema.
+  systemd:
+    name: httpd 
+    enabled: yes
+    state: started
+  become: True
+- name: Inicia e habilita o Zabbix Server na inicialização do sistema.
+  systemd:
+    name: zabbix-server
+    enabled: yes
+    state: started
+  become: True

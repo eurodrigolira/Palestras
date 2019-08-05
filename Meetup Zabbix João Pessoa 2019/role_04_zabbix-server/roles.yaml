@@ -1,0 +1,3 @@
+---
+- import_playbook: zabbix-server.yaml
+- import_playbook: zabbix-agent.yaml

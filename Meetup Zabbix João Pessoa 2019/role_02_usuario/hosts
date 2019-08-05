@@ -1,0 +1,5 @@
+[zabbix_servers]
+zabbix-server.rodrigolira.lab
+
+[zabbix_agents]
+zabbix-agent.rodrigolira.lab

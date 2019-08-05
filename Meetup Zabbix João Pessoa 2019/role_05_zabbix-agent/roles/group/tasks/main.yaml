@@ -1,0 +1,10 @@
+---
+- name: Cria o Grupo Meetup-Zabbix
+  local_action:
+    module: zabbix_group
+    server_url: http://zabbix-server.rodrigolira.lab/zabbix
+    login_user: Admin
+    login_password: zabbix
+    state: present
+    host_groups:
+      - Meetup-Zabbix
